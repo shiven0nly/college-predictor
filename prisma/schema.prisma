@@ -1,0 +1,274 @@
+// College Discovery Platform - Production Schema
+// Prisma ORM + PostgreSQL
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum UserRole {
+  USER
+  ADMIN
+  MODERATOR
+}
+
+enum CollegeType {
+  IIT
+  NIT
+  IIIT
+  GFTI
+  STATE
+  PRIVATE
+  DEEMED
+}
+
+enum CourseCategory {
+  GENERAL
+  EWS
+  OBC_NCL
+  SC
+  ST
+  DEFENCE
+  TFWS
+}
+
+enum CourseBranch {
+  COMPUTER_SCIENCE
+  ELECTRONICS
+  ELECTRICAL
+  MECHANICAL
+  CIVIL
+  CHEMICAL
+  AEROSPACE
+  BIOTECHNOLOGY
+  METALLURGY
+  MINING
+  TEXTILE
+  PRODUCTION
+  INDUSTRIAL
+  INFORMATION_TECHNOLOGY
+  ARTIFICIAL_INTELLIGENCE
+  DATA_SCIENCE
+  OTHER
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ============================================
+// USER MODEL
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String?
+  image         String?
+  role          UserRole  @default(USER)
+  emailVerified DateTime?
+  
+  // Relations
+  reviews       Review[]
+  savedColleges SavedCollege[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([email])
+  @@map("users")
+}
+
+// ============================================
+// COLLEGE MODEL
+// ============================================
+
+model College {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  type        CollegeType
+  
+  // Location
+  city        String
+  state       String
+  country     String      @default("India")
+  pincode     String?
+  address     String?
+  
+  // Basic Info
+  established Int?
+  website     String?
+  email       String?
+  phone       String?
+  
+  // Rankings & Ratings
+  nirfRanking Int?
+  rating      Float       @default(0)
+  totalReviews Int        @default(0)
+  
+  // Fees (in INR)
+  feesMin     Int?
+  feesMax     Int?
+  
+  // Placements (in INR)
+  avgPackage     Int?
+  highestPackage Int?
+  medianPackage  Int?
+  placementRate  Float?
+  
+  // Content
+  overview    String?     @db.Text
+  highlights  String[]
+  facilities  String[]
+  imageUrl    String?
+  logoUrl     String?
+  bannerUrl   String?
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  
+  // Status
+  isActive    Boolean @default(true)
+  isFeatured  Boolean @default(false)
+  
+  // Relations
+  courses       Course[]
+  reviews       Review[]
+  savedBy       SavedCollege[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([slug])
+  @@index([type])
+  @@index([state])
+  @@index([nirfRanking])
+  @@index([rating])
+  @@index([isActive, isFeatured])
+  @@map("colleges")
+}
+
+// ============================================
+// COURSE MODEL
+// ============================================
+
+model Course {
+  id          String         @id @default(cuid())
+  collegeId   String
+  
+  // Course Details
+  branch      CourseBranch
+  branchName  String
+  category    CourseCategory
+  duration    Int            @default(4) // in years
+  degree      String         @default("B.Tech")
+  
+  // Admission Criteria
+  openingRank Int
+  closingRank Int
+  totalSeats  Int?
+  
+  // Fees (in INR)
+  tuitionFee  Int?
+  hostelFee   Int?
+  otherFees   Int?
+  
+  // Status
+  isActive    Boolean @default(true)
+  
+  // Relations
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([collegeId, branch, category])
+  @@index([collegeId])
+  @@index([branch])
+  @@index([category])
+  @@index([openingRank])
+  @@index([closingRank])
+  @@map("courses")
+}
+
+// ============================================
+// REVIEW MODEL
+// ============================================
+
+model Review {
+  id        String       @id @default(cuid())
+  collegeId String
+  userId    String
+  
+  // Review Content
+  title     String
+  content   String       @db.Text
+  rating    Float        // 1-5
+  
+  // Review Categories (1-5 each)
+  academicsRating    Float?
+  placementRating    Float?
+  infrastructureRating Float?
+  facultyRating      Float?
+  campusLifeRating   Float?
+  
+  // Metadata
+  batch     Int?         // Graduation year
+  course    String?
+  
+  // Moderation
+  status    ReviewStatus @default(PENDING)
+  
+  // Engagement
+  helpfulCount Int       @default(0)
+  
+  // Relations
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([collegeId])
+  @@index([userId])
+  @@index([status])
+  @@index([rating])
+  @@map("reviews")
+}
+
+// ============================================
+// SAVED COLLEGE MODEL
+// ============================================
+
+model SavedCollege {
+  id        String @id @default(cuid())
+  userId    String
+  collegeId String
+  
+  // Optional notes
+  notes     String?
+  
+  // Relations
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, collegeId])
+  @@index([userId])
+  @@index([collegeId])
+  @@map("saved_colleges")
+}
