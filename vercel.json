@@ -1,19 +1,6 @@
 {
   "framework": "nextjs",
   "regions": ["bom1"],
-  "env": {
-    "DATABASE_URL": "@database_url",
-    "DIRECT_URL": "@direct_url",
-    "NEXTAUTH_SECRET": "@nextauth_secret",
-    "NEXTAUTH_URL": "@nextauth_url",
-    "NEXT_PUBLIC_APP_URL": "@next_public_app_url"
-  },
-  "build": {
-    "env": {
-      "DATABASE_URL": "@database_url",
-      "DIRECT_URL": "@direct_url"
-    }
-  },
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 30
