@@ -1,4 +1,4 @@
-import { FiCheckCircle, FiDollarSign, FiTrendingUp, FiUsers } from "react-icons/fi";
+import { FiCheckCircle, FiDollarSign, FiTrendingUp, FiUsers, FiGlobe } from "react-icons/fi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface College {
@@ -13,6 +13,7 @@ interface College {
   placementRate: number | null;
   rating: number;
   totalReviews: number;
+  website: string | null;
 }
 
 interface OverviewSectionProps {
@@ -98,6 +99,22 @@ export function OverviewSection({ college }: OverviewSectionProps) {
           </p>
         ) : (
           <p className="text-muted-foreground italic">No overview available for this institute.</p>
+        )}
+        
+        {/* Website Link */}
+        {college.website && (
+          <div className="mt-4 flex items-center gap-2">
+            <FiGlobe className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">Official Website:</span>
+            <a 
+              href={college.website} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm text-primary hover:underline font-medium"
+            >
+              {college.website.replace(/^https?:\/\//, '')}
+            </a>
+          </div>
         )}
       </div>
 
