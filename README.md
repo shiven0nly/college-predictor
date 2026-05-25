@@ -8,8 +8,7 @@ A comprehensive college discovery and prediction platform built with Next.js, he
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC)
 
-<<<<<<< HEAD
-=======
+
 ---
 
 # HOMEPAGE
@@ -17,8 +16,6 @@ A comprehensive college discovery and prediction platform built with Next.js, he
 
 ---
 
-
->>>>>>> 663344e111f3aeeaa0cf699f1442735c334815f4
 ## ✨ Features
 
 ### 🔍 College Discovery
@@ -241,8 +238,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - Placement statistics
 
 ## 🚀 Deployment
-
-<<<<<<< HEAD
 ### Vercel Deployment (Recommended)
 
 This project is optimized for deployment on Vercel.
@@ -385,7 +380,6 @@ If migrations fail during deployment:
 2. Or use GitHub Actions for automatic migrations
 
 =======
->>>>>>> 663344e111f3aeeaa0cf699f1442735c334815f4
 ### Build for Production
 ```bash
 npm run build
@@ -395,8 +389,6 @@ npm run build
 ```bash
 npm start
 ```
-
-<<<<<<< HEAD
 =======
 ### Environment Variables for Production
 Ensure all environment variables are set in your hosting platform:
@@ -406,7 +398,9 @@ Ensure all environment variables are set in your hosting platform:
 - `NEXTAUTH_URL`
 - `NEXT_PUBLIC_APP_URL`
 
->>>>>>> 663344e111f3aeeaa0cf699f1442735c334815f4
+---
+
+
 ## 📝 Available Scripts
 
 ```bash
