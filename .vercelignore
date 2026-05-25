@@ -1,0 +1,36 @@
+# Don't ignore generated Prisma client
+!app/generated/
+
+# Ignore development files
+.env.local
+.env.development
+.env.test
+
+# Ignore build artifacts
+.next/
+out/
+build/
+
+# Ignore logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore test files
+coverage/
+.nyc_output/
+
+# Ignore node_modules (handled by Vercel)
+node_modules/
