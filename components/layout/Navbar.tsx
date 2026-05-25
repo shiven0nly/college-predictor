@@ -2,15 +2,16 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { FiSearch, FiBookmark, FiUser, FiLogOut } from "react-icons/fi";
+import { FiBookmark, FiUser, FiLogOut } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Navbar() {
   const { data: session, status } = useSession();
@@ -60,13 +61,9 @@ export function Navbar() {
               </Button>
 
               {/* User Menu */}
-              <Select onValueChange={(value) => {
-                if (value === "logout") {
-                  signOut({ callbackUrl: "/" });
-                }
-              }}>
-                <SelectTrigger className="w-auto gap-2 border-none">
-                  <div className="flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-2">
                     {session.user.image ? (
                       <img
                         src={session.user.image}
@@ -81,31 +78,36 @@ export function Navbar() {
                     <span className="hidden sm:inline text-sm font-medium">
                       {session.user.name || session.user.email}
                     </span>
-                  </div>
-                </SelectTrigger>
-                <SelectContent align="end">
-                  <SelectItem value="profile" disabled>
-                    <div className="flex flex-col">
-                      <span className="font-medium">{session.user.name}</span>
-                      <span className="text-xs text-muted-foreground">
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {session.user.name}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
                         {session.user.email}
-                      </span>
+                      </p>
                     </div>
-                  </SelectItem>
-                  <SelectItem value="saved-colleges">
-                    <Link href="/saved-colleges" className="flex items-center gap-2">
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/saved-colleges" className="flex items-center gap-2 cursor-pointer">
                       <FiBookmark className="h-4 w-4" />
-                      Saved Colleges
+                      <span>Saved Colleges</span>
                     </Link>
-                  </SelectItem>
-                  <SelectItem value="logout" className="text-red-600">
-                    <div className="flex items-center gap-2">
-                      <FiLogOut className="h-4 w-4" />
-                      Logout
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="text-red-600 focus:text-red-600 cursor-pointer"
+                  >
+                    <FiLogOut className="h-4 w-4 mr-2" />
+                    <span>Logout</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           ) : (
             <>
