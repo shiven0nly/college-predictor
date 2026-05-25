@@ -1,15 +1,13 @@
-# Don't ignore generated Prisma client
-!app/generated/
+# Vercel Ignore File
+# This file tells Vercel which files to ignore during deployment
+
+# Don't ignore generated Prisma client - it's generated during build
+# !app/generated/
 
 # Ignore development files
 .env.local
 .env.development
 .env.test
-
-# Ignore build artifacts
-.next/
-out/
-build/
 
 # Ignore logs
 *.log
@@ -32,5 +30,3 @@ Thumbs.db
 coverage/
 .nyc_output/
 
-# Ignore node_modules (handled by Vercel)
-node_modules/
