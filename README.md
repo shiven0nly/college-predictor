@@ -1,36 +1,301 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 IIT Discovery - College Predictor & Discovery Platform
 
-## Getting Started
+A comprehensive college discovery and prediction platform built with Next.js, helping students find their dream IIT based on JEE Advanced ranks, compare colleges, and make informed decisions about their engineering education.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16.2.6-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![Prisma](https://img.shields.io/badge/Prisma-7.8.0-2D3748)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+# HOMEPAGE
+<img width="1905" height="904" alt="image" src="https://github.com/user-attachments/assets/53d45860-5445-4768-9732-5782b9c5997a" />
+
+---
+
+
+## ✨ Features
+
+### 🔍 College Discovery
+- Browse and search through 23+ IITs with detailed information
+- Filter by location, NIRF ranking, fees, and placement statistics
+- View comprehensive college profiles with:
+  - Campus facilities and highlights
+  - Placement statistics and packages
+  - Student reviews and ratings
+  - Official website links
+  - Establishment year and NIRF rankings
+
+### 🎯 College Predictor
+- Predict admission chances based on JEE Advanced rank
+- Filter by category (GENERAL, OBC-NCL, SC, ST, EWS)
+- View opening and closing ranks for different branches
+- Real-time course availability based on JOSAA data
+- Detailed branch-wise cutoff information
+
+### ⚖️ College Comparison
+- Compare up to 3 colleges side-by-side
+- Compare fees, placements, rankings, and facilities
+- Interactive comparison table with key metrics
+- Make informed decisions with comprehensive data
+
+### 💾 Save & Bookmark
+- Save favorite colleges for later review
+- Personal dashboard for saved colleges
+- Quick access to bookmarked institutions
+- Add personal notes to saved colleges
+
+### 👤 User Authentication
+- Secure authentication with NextAuth.js
+- Email/password based registration and login
+- Protected routes and personalized experience
+- User profile management
+
+### 📊 Reviews & Ratings
+- Read authentic student reviews
+- View ratings across multiple categories:
+  - Academics
+  - Placements
+  - Infrastructure
+  - Faculty
+  - Campus Life
+- Overall college ratings and review counts
+
+## 🚀 Tech Stack
+
+### Frontend
+- **Framework**: Next.js 16.2.6 (App Router)
+- **Language**: TypeScript 5.0
+- **Styling**: Tailwind CSS 4.0
+- **UI Components**: shadcn/ui + Radix UI
+- **Icons**: React Icons (Feather Icons)
+- **State Management**: React Hooks + NextAuth Session
+
+### Backend
+- **Runtime**: Node.js
+- **API**: Next.js API Routes
+- **Authentication**: NextAuth.js 4.24
+- **Password Hashing**: bcryptjs
+
+### Database
+- **Database**: PostgreSQL
+- **ORM**: Prisma 7.8.0
+- **Adapter**: Prisma PostgreSQL Adapter
+- **Migrations**: Prisma Migrate
+
+### Data
+- **Source**: JOSAA Round 5 Data (3000+ course entries)
+- **Format**: CSV parsing with csv-parse
+- **Seeding**: Automated seed scripts
+
+## 📁 Project Structure
+
+```
+college-predictor/
+├── app/                          # Next.js App Router
+│   ├── api/                      # API Routes
+│   │   ├── auth/                 # Authentication endpoints
+│   │   ├── colleges/             # College data endpoints
+│   │   ├── compare/              # Comparison endpoint
+│   │   ├── predict/              # Prediction endpoint
+│   │   └── saved-colleges/       # Saved colleges endpoints
+│   ├── auth/                     # Auth pages (login, signup)
+│   ├── colleges/[slug]/          # Dynamic college pages
+│   ├── compare/                  # Comparison page
+│   ├── predictor/                # Predictor page
+│   ├── saved-colleges/           # Saved colleges page
+│   ├── lib/                      # Utility libraries
+│   │   ├── auth.ts               # NextAuth configuration
+│   │   ├── prisma.ts             # Prisma client
+│   │   └── services/             # Service layer
+│   └── generated/                # Prisma generated types
+├── components/                   # React Components
+│   ├── ui/                       # shadcn/ui components
+│   ├── layout/                   # Layout components (Navbar)
+│   ├── college/                  # College detail components
+│   ├── comparison/               # Comparison components
+│   ├── discovery/                # Discovery/listing components
+│   ├── predictor/                # Predictor components
+│   └── providers/                # Context providers
+├── prisma/                       # Database
+│   ├── schema.prisma             # Database schema
+│   └── seed.ts                   # Seed script
+├── data/                         # Static data files
+│   └── Josaa data - round 5 data.csv
+├── public/                       # Static assets
+│   ├── bg.png                    # Background image
+│   └── iit-*.jpg                 # IIT campus images
+└── lib/                          # Shared utilities
+    └── utils.ts                  # Helper functions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Installation & Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 20+ 
+- PostgreSQL database
+- npm or yarn package manager
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd college-predictor
+```
 
-## Learn More
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Environment Variables
+Create a `.env` file in the root directory:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/college_predictor?schema=public"
+DIRECT_URL="postgresql://user:password@localhost:5432/college_predictor?schema=public"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# NextAuth
+NEXTAUTH_SECRET="your-secret-key-here"
+NEXTAUTH_URL="http://localhost:3000"
 
-## Deploy on Vercel
+# App
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Database Setup
+```bash
+# Generate Prisma Client
+npm run prisma:generate
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Run migrations
+npm run prisma:migrate
+
+# Seed the database
+npm run db:seed
+```
+
+### 5. Run Development Server
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📊 Database Schema
+
+### Core Models
+- **User**: User accounts and authentication
+- **College**: IIT information and details
+- **Course**: Course offerings with cutoffs
+- **Review**: Student reviews and ratings
+- **SavedCollege**: User's saved colleges
+
+### Key Features
+- Relational data with foreign keys
+- Cascading deletes for data integrity
+- Indexed fields for query performance
+- Enum types for categories and branches
+
+## 🎨 UI/UX Features
+
+- **Responsive Design**: Mobile-first approach, works on all devices
+- **Dark Mode Support**: Built-in dark theme
+- **Modern UI**: Clean, professional SaaS-style interface
+- **Smooth Animations**: Tailwind CSS animations
+- **Accessible**: WCAG compliant components
+- **Fast Loading**: Optimized images and lazy loading
+- **SEO Friendly**: Meta tags and structured data
+
+## 🔐 Authentication Flow
+
+1. User signs up with email and password
+2. Password is hashed using bcryptjs
+3. User logs in with credentials
+4. NextAuth creates a JWT session
+5. Protected routes check session status
+6. User can access personalized features
+
+## 📈 Data Sources
+
+### NIRF Rankings 2024
+- Official NIRF Engineering Rankings
+- Updated with latest 2024 data
+- Accurate rankings for all IITs
+
+### JOSAA Data
+- Round 5 cutoff data
+- 3000+ course entries
+- Opening and closing ranks
+- Category-wise cutoffs
+
+### College Information
+- Official IIT websites
+- Establishment years
+- Campus facilities
+- Placement statistics
+
+## 🚀 Deployment
+
+### Build for Production
+```bash
+npm run build
+```
+
+### Start Production Server
+```bash
+npm start
+```
+
+### Environment Variables for Production
+Ensure all environment variables are set in your hosting platform:
+- `DATABASE_URL`
+- `DIRECT_URL`
+- `NEXTAUTH_SECRET`
+- `NEXTAUTH_URL`
+- `NEXT_PUBLIC_APP_URL`
+
+## 📝 Available Scripts
+
+```bash
+npm run dev              # Start development server
+npm run build            # Build for production
+npm run start            # Start production server
+npm run lint             # Run ESLint
+npm run prisma:generate  # Generate Prisma Client
+npm run prisma:migrate   # Run database migrations
+npm run prisma:studio    # Open Prisma Studio
+npm run db:seed          # Seed database with data
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🙏 Acknowledgments
+
+- **NIRF** for official ranking data
+- **JOSAA** for admission cutoff data
+- **shadcn/ui** for beautiful UI components
+- **Radix UI** for accessible primitives
+- **Vercel** for Next.js framework
+
+## 📧 Contact
+
+For questions or support, please open an issue on GitHub.
+
+---
+
+**Built with ❤️ for aspiring engineers**
