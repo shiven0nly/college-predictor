@@ -70,12 +70,13 @@ export function CollegeCard({
             collegeId={id}
             initialSaved={initialSaved}
             variant="icon"
-            className="bg-background/80 backdrop-blur-sm hover:bg-background"
+            className="bg-background/40 backdrop-blur-md hover:bg-background/60 transition-all"
+            style={{ backdropFilter: 'blur(4px)' }}
           />
         </div>
       </div>
       <CardHeader className="p-4 pb-2">
-        <h3 className="font-semibold text-lg line-clamp-1" title={name}>
+        <h3 className="font-semibold text-lg line-clamp-2 leading-tight" title={name}>
           <Link href={`/colleges/${slug}`} className="hover:underline">
             {name}
           </Link>

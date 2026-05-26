@@ -19,7 +19,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search IITs by name, location..."
-        className="h-12 w-full rounded-full bg-muted/50 pl-10 pr-4 text-base focus-visible:ring-1 focus-visible:ring-primary md:text-sm"
+        className="h-12 w-full rounded-full bg-muted/50 pl-10 pr-4 text-base border border-white/20 focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary/50 transition-all md:text-sm"
       />
     </div>
   )

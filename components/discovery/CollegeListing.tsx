@@ -171,7 +171,7 @@ export function CollegeListing() {
               />
             </>
           ) : (
-            <EmptyState />
+            <EmptyState onClearFilters={handleReset} />
           )}
         </main>
       </section>

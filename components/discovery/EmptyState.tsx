@@ -1,6 +1,11 @@
 import { FiSearch } from "react-icons/fi"
+import { Button } from "@/components/ui/button"
 
-export function EmptyState() {
+export interface EmptyStateProps {
+  onClearFilters?: () => void;
+}
+
+export function EmptyState({ onClearFilters }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted mb-4">
@@ -10,6 +15,15 @@ export function EmptyState() {
       <p className="mt-2 text-sm text-muted-foreground max-w-sm">
         We couldn&apos;t find any colleges matching your current filters. Try adjusting your search criteria or resetting the filters.
       </p>
+      {onClearFilters && (
+        <Button 
+          variant="outline" 
+          className="mt-6"
+          onClick={onClearFilters}
+        >
+          Clear Filters
+        </Button>
+      )}
     </div>
   )
 }
