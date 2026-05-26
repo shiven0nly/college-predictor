@@ -71,7 +71,6 @@ export function CollegeCard({
             initialSaved={initialSaved}
             variant="icon"
             className="bg-background/40 backdrop-blur-md hover:bg-background/60 transition-all"
-            style={{ backdropFilter: 'blur(4px)' }}
           />
         </div>
       </div>

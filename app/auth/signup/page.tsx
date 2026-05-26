@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { FiAlertCircle, FiCheckCircle } from "react-icons/fi";
+import { FiAlertCircle, FiCheckCircle, FiEye, FiEyeOff } from "react-icons/fi";
+import { cn } from "@/lib/utils";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -16,6 +17,8 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -87,8 +90,8 @@ export default function SignupPage() {
               </div>
             )}
 
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+            <div className="space-y-2.5">
+              <Label htmlFor="name" className="text-xs text-muted-foreground">Name</Label>
               <Input
                 id="name"
                 type="text"
@@ -100,8 +103,8 @@ export default function SignupPage() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+            <div className="space-y-2.5">
+              <Label htmlFor="email" className="text-xs text-muted-foreground">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -113,36 +116,85 @@ export default function SignupPage() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="At least 6 characters"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={loading || success}
-              />
+            <div className="space-y-2.5">
+              <Label htmlFor="password" className="text-xs text-muted-foreground">Password</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="At least 6 characters"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={loading || success}
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-2 mb-5">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                placeholder="Re-enter your password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                disabled={loading || success}
-              />
+            <div className="space-y-2.5 mb-5">
+              <Label htmlFor="confirmPassword" className="text-xs text-muted-foreground">Confirm Password</Label>
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Re-enter your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  disabled={loading || success}
+                  className={cn(
+                    "pr-10",
+                    confirmPassword && password && confirmPassword === password && "border-green-500 focus-visible:border-green-500 focus-visible:ring-green-500/50",
+                    confirmPassword && password && confirmPassword !== password && "border-red-500 focus-visible:border-red-500 focus-visible:ring-red-500/50"
+                  )}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  tabIndex={-1}
+                >
+                  {showConfirmPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
+                </button>
+              </div>
+              {confirmPassword && password && confirmPassword !== password && (
+                <p className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                  <FiAlertCircle className="h-3 w-3" />
+                  Passwords do not match
+                </p>
+              )}
+              {confirmPassword && password && confirmPassword === password && (
+                <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+                  <FiCheckCircle className="h-3 w-3" />
+                  Passwords match
+                </p>
+              )}
             </div>
           </CardContent>
 
           <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={loading || success}>
-              {loading ? "Creating account..." : "Create account"}
+            <Button 
+              type="submit" 
+              className="w-full hover:opacity-90 transition-opacity" 
+              disabled={loading || success}
+            >
+              {loading ? (
+                <>
+                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  Creating account...
+                </>
+              ) : (
+                "Create account"
+              )}
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">

@@ -40,15 +40,22 @@ export function PredictionResultCard({ result, userRank }: PredictionResultCardP
   const chancePercent = Math.min(100, Math.max(0, (userPosition / rankRange) * 100));
   
   let chanceLabel = "Low";
-  let chanceColor = "text-red-600 dark:text-red-400";
+  let chanceBadgeClass = "bg-red-50 text-red-700 dark:bg-red-950/30 dark:text-red-400";
   
   if (chancePercent >= 70) {
     chanceLabel = "High";
-    chanceColor = "text-green-600 dark:text-green-400";
+    chanceBadgeClass = "bg-green-50 text-green-700 dark:bg-green-950/30 dark:text-green-400";
   } else if (chancePercent >= 40) {
     chanceLabel = "Moderate";
-    chanceColor = "text-yellow-600 dark:text-yellow-400";
+    chanceBadgeClass = "bg-yellow-50 text-yellow-700 dark:bg-yellow-950/30 dark:text-yellow-400";
   }
+  
+  // Format average package to LPA (Lakhs Per Annum)
+  const formatPackage = (amount: number | null) => {
+    if (!amount) return null;
+    const lpa = amount / 100000;
+    return `₹${lpa.toFixed(1)} LPA`;
+  };
 
   return (
     <Card className="group overflow-hidden transition-all hover:shadow-md hover:border-border/80">
@@ -66,8 +73,9 @@ export function PredictionResultCard({ result, userRank }: PredictionResultCardP
             </div>
           </div>
           <div className="flex flex-col items-end flex-shrink-0">
-            <span className="text-xs text-muted-foreground">Chance</span>
-            <span className={`font-bold text-sm ${chanceColor}`}>{chanceLabel}</span>
+            <span className={`px-2.5 py-1 rounded-md text-xs font-semibold ${chanceBadgeClass}`}>
+              {chanceLabel}
+            </span>
           </div>
         </div>
       </CardHeader>
@@ -104,7 +112,7 @@ export function PredictionResultCard({ result, userRank }: PredictionResultCardP
               <FiTrendingUp className="h-3.5 w-3.5 text-primary flex-shrink-0" />
               <div className="flex flex-col min-w-0">
                 <span className="text-xs text-muted-foreground">Avg Package</span>
-                <span className="font-medium">₹{college.avgPackage}L</span>
+                <span className="font-medium">{formatPackage(college.avgPackage)}</span>
               </div>
             </div>
           )}
