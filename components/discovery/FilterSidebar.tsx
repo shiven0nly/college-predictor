@@ -24,10 +24,10 @@ export function FilterSidebar({
     <aside className="w-full space-y-6 md:w-64 shrink-0">
       <div>
         <h3 className="mb-4 text-sm font-medium">Filters</h3>
-        <div className="space-y-6">
+        <div className="space-y-6 flex w-full">
           
           {/* Institute Type - Checkboxes */}
-          <div className="space-y-3">
+          <div className="space-y-3 w-1/2">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Institute Type
             </h4>
@@ -77,7 +77,7 @@ export function FilterSidebar({
           </div>
 
           {/* NIRF Ranking - Radio Group */}
-          <div className="space-y-3">
+          <div className="space-y-3 w-1/2">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               NIRF Ranking
             </h4>
